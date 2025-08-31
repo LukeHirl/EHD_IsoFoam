@@ -1,0 +1,46 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      setExprFieldsDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+expressions
+(
+    rhoE_EM
+    {
+        field       rhoE_EM;
+        dimensions  [0 -3 1 0 0 1 0];
+
+        constants
+        {
+            centre (0 0 0);
+        }
+
+        variables
+        (
+        );
+
+        fieldMask
+        #{
+            true
+        #};
+
+        expression
+        #{
+            exp(-((pos().x()*pos().x())+(pos().y()*pos().y()))/0.005)/(0.05*sqrt(2*pi()))
+        #};
+    }
+);
+
+
+// ************************************************************************* //

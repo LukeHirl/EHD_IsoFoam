@@ -1,0 +1,245 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      changeDictionaryDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+boundary
+{
+    fluid_to_resinExtractionGrid
+    {
+        type             patch;
+        ~inGroups;
+        ~sampleMode;
+		~sampleRegion;
+		~samplePatch;
+	}
+	
+	//fluid_to_electrode
+    //{
+    //    type             patch;
+    //    ~inGroups;
+    //    ~sampleMode;
+	//	~sampleRegion;
+	//	~samplePatch;
+	//}
+	
+	fluid_to_emitter
+    {
+        type             patch;
+        ~inGroups;
+        ~sampleMode;
+		~sampleRegion;
+		~samplePatch;
+	}
+}
+
+alpha.water
+{
+    internalField   uniform 0;
+
+    boundaryField
+    {
+        ".*"
+        {
+            type            zeroGradient;
+        }
+		"atmosphere"
+		{
+			type            inletOutlet;
+			inletValue      uniform 0;
+			value           uniform 0;
+		}
+		"inlet"
+        {
+			type            inletOutlet;
+			inletValue      uniform 1;
+			value           uniform 1;
+		}
+		"axis"
+        {
+            type            empty;
+        }
+		"maxY"
+		{
+			type            wedge;
+		}
+		"minY"
+		{
+			type            wedge;
+		}
+	}
+}
+
+p_rgh
+{
+    internalField   uniform 0;
+
+    boundaryField
+    {
+        ".*"
+        {
+            type            fixedFluxPressure;
+			value           uniform 0;
+        }
+		"atmosphere"
+        {
+            type            totalPressure;
+			p0              uniform 0;
+        }
+		"axis"
+        {
+            type            empty;
+        }
+		"maxY"
+		{
+			type            wedge;
+		}
+		"minY"
+		{
+			type            wedge;
+		}
+    }
+}
+U
+{
+    internalField   uniform (0 0 0);
+
+    boundaryField
+    {
+        ".*"
+        {
+            type            noSlip;
+        }
+		"atmosphere"
+        {
+            type            pressureInletOutletVelocity;
+			value           uniform (0 0 0);
+        }
+		"inlet"
+        {
+            type            fixedValue;
+			value           uniform (0 0.1 0);
+        }
+		"axis"
+        {
+            type            empty;
+        }
+		"maxY"
+		{
+			type            wedge;
+		}
+		"minY"
+		{
+			type            wedge;
+		}
+    }
+}
+
+Ue
+{
+    internalField   uniform 0;
+
+    boundaryField
+    {
+        ".*"
+        {
+            type            zeroGradient;
+        }
+		"inlet"
+        {
+            type            fixedValue;
+			value           uniform 2000;
+        }
+		"fluid_to_resinExtractionGrid" //"fluid_to_electrode"
+		{
+			type            fixedValue;
+			value           uniform 0;
+		}
+		"axis"
+        {
+            type            empty;
+        }
+		"maxY"
+		{
+			type            wedge;
+		}
+		"minY"
+		{
+			type            wedge;
+		}
+    }
+}
+
+Ue_EM
+{
+    internalField   uniform 0;
+
+    boundaryField
+    {
+        ".*"
+        {
+            type            zeroGradient;
+        }
+		"inlet"
+        {
+            type            fixedValue;
+			value           uniform 2000;
+        }
+		"EM_to_resinExtractionGrid" //"EM_to_electrode"
+		{
+			type            fixedValue;
+			value           uniform 0;
+		}
+		"axis"
+        {
+            type            empty;
+        }
+		"maxY"
+		{
+			type            wedge;
+		}
+		"minY"
+		{
+			type            wedge;
+		}
+    }
+}
+
+rhoE_EM
+{
+    internalField   uniform 0;
+
+    boundaryField
+    {
+        ".*"
+        {
+            type            zeroGradient;
+        }
+		"axis"
+        {
+            type            empty;
+        }
+		"maxY"
+		{
+			type            wedge;
+		}
+		"minY"
+		{
+			type            wedge;
+		}
+    }
+}
+
+
+// ************************************************************************* //
