@@ -65,9 +65,6 @@ NewStart					true;
 
 interfaceCellTol 			0.01;
 
-useFaceProperties			false;
-
-
 phase1
 {
     sgm             1; 
