@@ -1,0 +1,7 @@
+blockMesh
+setAlphaFields           //copy the internals of alpha over to rhoE_EM so that charge density is one in every volume fraction of alpha
+EHD_IsoFoam8
+
+alternatively to EHD_IsoFoam8:
+decomposePar
+mpirun -np x EHD_IsoFoam8 -parallel   // where x is the number of processors specified in system/decomposeParDict
